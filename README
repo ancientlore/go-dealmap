@@ -1,0 +1,13 @@
+go-dealmap is an API library written in go for accessing the DealMap service.
+
+For more information about the DealMap API, see:
+
+http://www.thedealmap.com/api/
+
+For more information about Go, see:
+
+http://golang.org/
+
+Current Status:
+
+The API is operational except for adding a deal, which hasn't been implemented yet.
