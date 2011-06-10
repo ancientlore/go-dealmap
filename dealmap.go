@@ -83,10 +83,10 @@ type Deal struct {
 	DealType                               int
 	DealUnit                               int
 	Description                            string
-	DiscountedValue                        int
+	DiscountedValue                        float64
 	EffectiveTime                          string
 	ExpirationTime                         string
-	FaceValue                              int
+	FaceValue                              float64
 	ID                                     string
 	IconUrl                                string
 	ImageUrl                               string
@@ -96,7 +96,7 @@ type Deal struct {
 	Longitude                              float64
 	MoreInfoLink                           string
 	Phone                                  string
-	Ratings                                int
+	Ratings                                float64
 	ReviewCount                            int
 	SoldCount                              int
 	State                                  string
@@ -144,7 +144,7 @@ type Business struct {
 	Longitude    float64
 	MoreInfoLink string
 	Phone        string
-	Ratings      int
+	Ratings      float64
 	Reviews      int
 	State        string
 	Title        string
