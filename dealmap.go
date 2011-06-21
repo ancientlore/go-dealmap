@@ -55,12 +55,14 @@ const (
 	EUR = 3
 )
 
+// Deals is an API response containing a list of deals and an API message
 type Deals struct {
-	Message      string
-	Results      []Deal "Results>Deal"
-	TotalResults int
+	Message      string // Message from API, usually indicating a problem of some kind
+	Results      []Deal "Results>Deal" // List of Deal objects
+	TotalResults int    // Total number of results
 }
 
+// A Deal contains all the details of a single deal. See TheDealMap API documentation for details.
 type Deal struct {
 	Activity                               int
 	AddedBy                                string
@@ -109,28 +111,34 @@ type Deal struct {
 	ZipCode                                string
 }
 
+// Attempts to parse the additional discount coupon's effective time
 func (d *Deal) ParseAdditionalDiscountCouponEffectiveTime() (*time.Time, os.Error) {
 	return time.Parse(time.RFC3339, d.AdditionalDiscountCouponEffectiveTime)
 }
 
+// Attempts to parse the additional discount coupon's expiration time
 func (d *Deal) ParseAdditionalDiscountCouponExpirationTime() (*time.Time, os.Error) {
 	return time.Parse(time.RFC3339, d.AdditionalDiscountCouponExpirationTime)
 }
 
+// Attempts to parse the deal's effective time
 func (d *Deal) ParseEffectiveTime() (*time.Time, os.Error) {
 	return time.Parse(time.RFC3339, d.EffectiveTime)
 }
 
+// Attempts to parse the deal's expiration time
 func (d *Deal) ParseExpirationTime() (*time.Time, os.Error) {
 	return time.Parse(time.RFC3339, d.ExpirationTime)
 }
 
+// Businesses is an API response containing a list of Business objects and a response message
 type Businesses struct {
-	Message      string
-	Results      []Business "Results>Business"
-	TotalResults int
+	Message      string     // Message from API, usually indicating a problem of some kind
+	Results      []Business "Results>Business" // List of Business objects
+	TotalResults int        // Total number of results
 }
 
+// Business contains the details of a business in TheDealMap. See the API documentation for details.
 type Business struct {
 	Activity     int
 	AddressLine  string
