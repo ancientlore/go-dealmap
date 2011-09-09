@@ -4,6 +4,7 @@ import (
 	"http"
 	"fmt"
 	"strconv"
+	"url"
 	"xml"
 	"time"
 	"os"
@@ -28,7 +29,7 @@ func New(apiUrl string, client *http.Client, apiKey string) *DealMap {
 
 // buildQuery returns a map to use as the query string in requests to the API.
 // The given parameters are included if they are non-empty.
-func (dm *DealMap) buildQuery(location string, query string, distanceMi int, startIndex int, pageSize int, activity int, capability int, expiration *time.Time) http.Values {
+func (dm *DealMap) buildQuery(location string, query string, distanceMi int, startIndex int, pageSize int, activity int, capability int, expiration *time.Time) url.Values {
 	args := make(map[string][]string)
 	if location != "" {
 		args["l"] = []string{location}
