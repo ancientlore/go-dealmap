@@ -58,7 +58,7 @@ const (
 // Deals is an API response containing a list of deals and an API message
 type Deals struct {
 	Message      string // Message from API, usually indicating a problem of some kind
-	Results      []Deal "Results>Deal" // List of Deal objects
+	Results      []Deal `xml:"Results>Deal"` // List of Deal objects
 	TotalResults int    // Total number of results
 }
 
@@ -134,7 +134,7 @@ func (d *Deal) ParseExpirationTime() (*time.Time, os.Error) {
 // Businesses is an API response containing a list of Business objects and a response message
 type Businesses struct {
 	Message      string     // Message from API, usually indicating a problem of some kind
-	Results      []Business "Results>Business" // List of Business objects
+	Results      []Business `xml:"Results>Business"` // List of Business objects
 	TotalResults int        // Total number of results
 }
 
