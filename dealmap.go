@@ -1,9 +1,6 @@
 package dealmap
 
-import (
-	"time"
-	"os"
-)
+import "time"
 
 // Centered activity Values
 const (
@@ -112,22 +109,22 @@ type Deal struct {
 }
 
 // Attempts to parse the additional discount coupon's effective time
-func (d *Deal) ParseAdditionalDiscountCouponEffectiveTime() (*time.Time, os.Error) {
+func (d *Deal) ParseAdditionalDiscountCouponEffectiveTime() (time.Time, error) {
 	return time.Parse(time.RFC3339, d.AdditionalDiscountCouponEffectiveTime)
 }
 
 // Attempts to parse the additional discount coupon's expiration time
-func (d *Deal) ParseAdditionalDiscountCouponExpirationTime() (*time.Time, os.Error) {
+func (d *Deal) ParseAdditionalDiscountCouponExpirationTime() (time.Time, error) {
 	return time.Parse(time.RFC3339, d.AdditionalDiscountCouponExpirationTime)
 }
 
 // Attempts to parse the deal's effective time
-func (d *Deal) ParseEffectiveTime() (*time.Time, os.Error) {
+func (d *Deal) ParseEffectiveTime() (time.Time, error) {
 	return time.Parse(time.RFC3339, d.EffectiveTime)
 }
 
 // Attempts to parse the deal's expiration time
-func (d *Deal) ParseExpirationTime() (*time.Time, os.Error) {
+func (d *Deal) ParseExpirationTime() (time.Time, error) {
 	return time.Parse(time.RFC3339, d.ExpirationTime)
 }
 

@@ -1,14 +1,14 @@
 package main
 
 import (
+	"../_obj/dealmap"
+	"encoding/json"
 	"flag"
 	"log"
-	"json"
-	"time"
-	"http"
-	"os"
+	"net/http"
+
 	"strings"
-	"../_obj/dealmap"
+	"time"
 )
 
 var key = flag.String("key", "", "API key")
@@ -27,8 +27,8 @@ func main() {
 	flag.Parse()
 	var client http.Client
 	dm := dealmap.New(dealmap.ApiUrl, &client, *key)
-	var ed *time.Time
-	var err os.Error
+	var ed time.Time
+	var err error
 	if *expirationDate != "" {
 		ed, err = time.Parse("01-02-2006", *expirationDate)
 		if err != nil {

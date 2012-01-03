@@ -1,13 +1,12 @@
 package dealmap
 
 import (
-	"http"
+	"encoding/xml"
 	"fmt"
+	"net/http"
+	"net/url"
 	"strconv"
-	"url"
-	"xml"
 	"time"
-	"os"
 )
 
 // Dealmap API information
@@ -29,7 +28,7 @@ func New(apiUrl string, client *http.Client, apiKey string) *DealMap {
 
 // buildQuery returns a map to use as the query string in requests to the API.
 // The given parameters are included if they are non-empty.
-func (dm *DealMap) buildQuery(location string, query string, distanceMi int, startIndex int, pageSize int, activity int, capability int, expiration *time.Time) url.Values {
+func (dm *DealMap) buildQuery(location string, query string, distanceMi int, startIndex int, pageSize int, activity int, capability int, expiration time.Time) url.Values {
 	args := make(map[string][]string)
 	if location != "" {
 		args["l"] = []string{location}
@@ -52,7 +51,7 @@ func (dm *DealMap) buildQuery(location string, query string, distanceMi int, sta
 	if capability > 0 {
 		args["c"] = []string{strconv.Itoa(capability)}
 	}
-	if expiration != nil {
+	if expiration.Unix() > 0 {
 		args["ed"] = []string{expiration.Format("2006-01-02")}
 	}
 	args["key"] = []string{dm.key}
@@ -60,7 +59,7 @@ func (dm *DealMap) buildQuery(location string, query string, distanceMi int, sta
 }
 
 // SearchDeals invokes the "search deals" API from TheDealMap and returns the response as a Deals object.
-func (dm *DealMap) SearchDeals(location string, query string, distanceMi int, startIndex int, pageSize int, activity int, capability int, expirationDate *time.Time) (*Deals, os.Error) {
+func (dm *DealMap) SearchDeals(location string, query string, distanceMi int, startIndex int, pageSize int, activity int, capability int, expirationDate time.Time) (*Deals, error) {
 	args := dm.buildQuery(location, query, distanceMi, startIndex, pageSize, activity, capability, expirationDate)
 	resp, err := dm.httpClient.Get(fmt.Sprintf("%s/search/deals/?%s", dm.baseUrl, args.Encode()))
 	defer resp.Body.Close()
@@ -76,8 +75,8 @@ func (dm *DealMap) SearchDeals(location string, query string, distanceMi int, st
 }
 
 // SearchBusinesses invokes the "search businesses" API from TheDealMap and returns the response as a Businesses object.
-func (dm *DealMap) SearchBusinesses(location string, query string, distanceMi int, startIndex int, pageSize int, activity int) (*Businesses, os.Error) {
-	args := dm.buildQuery(location, query, distanceMi, startIndex, pageSize, activity, 0, nil)
+func (dm *DealMap) SearchBusinesses(location string, query string, distanceMi int, startIndex int, pageSize int, activity int) (*Businesses, error) {
+	args := dm.buildQuery(location, query, distanceMi, startIndex, pageSize, activity, 0, time.Unix(0, 0))
 	resp, err := dm.httpClient.Get(fmt.Sprintf("%s/search/businesses/?%s", dm.baseUrl, args.Encode()))
 
 	if err != nil {
@@ -92,8 +91,8 @@ func (dm *DealMap) SearchBusinesses(location string, query string, distanceMi in
 }
 
 // DealDetails invokes the "deal details" API from TheDeapMap and returns the response as a Deal object.
-func (dm *DealMap) DealDetails(id string) (*Deal, os.Error) {
-	args := dm.buildQuery("", "", 0, 0, 0, 0, 0, nil)
+func (dm *DealMap) DealDetails(id string) (*Deal, error) {
+	args := dm.buildQuery("", "", 0, 0, 0, 0, 0, time.Unix(0, 0))
 	resp, err := dm.httpClient.Get(fmt.Sprintf("%s/deals/%s/?%s", dm.baseUrl, id, args.Encode()))
 	defer resp.Body.Close()
 	if err != nil {
