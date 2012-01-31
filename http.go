@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strconv"
 	"time"
+	"io/ioutil"
 )
 
 // Dealmap API information
@@ -67,7 +68,11 @@ func (dm *DealMap) SearchDeals(location string, query string, distanceMi int, st
 		return nil, err
 	}
 	var result Deals
-	err = xml.Unmarshal(resp.Body, &result)
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = xml.Unmarshal(data, &result)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +88,11 @@ func (dm *DealMap) SearchBusinesses(location string, query string, distanceMi in
 		return nil, err
 	}
 	var result Businesses
-	err = xml.Unmarshal(resp.Body, &result)
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = xml.Unmarshal(data, &result)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +108,11 @@ func (dm *DealMap) DealDetails(id string) (*Deal, error) {
 		return nil, err
 	}
 	var result Deal
-	err = xml.Unmarshal(resp.Body, &result)
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	err = xml.Unmarshal(data, &result)
 	if err != nil {
 		return nil, err
 	}
