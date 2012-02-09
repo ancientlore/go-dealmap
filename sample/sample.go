@@ -1,7 +1,7 @@
 package main
 
 import (
-	"../_obj/dealmap"
+	"github.com/ancientlore/go-dealmap"
 	"encoding/json"
 	"flag"
 	"log"
