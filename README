@@ -10,4 +10,4 @@ http://golang.org/
 
 Current Status:
 
-The API is operational except for adding a deal, which hasn't been implemented yet.
+Google has acquired The Deal Map, and shut down the API in favor of Google Offers. Thus, don't expect further updates to this project.
